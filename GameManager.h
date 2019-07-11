@@ -13,6 +13,7 @@ private:
     entt::registry registry;
     int step;
     uint32_t step_size;
+protected:
     std::vector<System*> systems;
 public:
     GameManager();
