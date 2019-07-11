@@ -10,7 +10,7 @@ int main() {
     auto step_size = gm.get_step_size();
 
     sf::Clock clock;
-    sf::Window window(sf::VideoMode(1367, 768), "Tetris");
+    sf::Window window(sf::VideoMode(1365, 768), "Tetris");
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
