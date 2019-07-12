@@ -5,6 +5,7 @@
 #include "components/Controls.h"
 #include "components/Block.h"
 #include "components/FigureState.h"
+#include "components/Figure.h"
 #include "components/Player.h"
 
 #endif //TETRIS_COMPONENTS_H
