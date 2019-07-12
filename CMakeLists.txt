@@ -17,5 +17,5 @@ include_directories(lib/imgui-sfml)
 add_executable(Tetris main.cpp lib/imgui/imgui.cpp lib/imgui/imgui_draw.cpp lib/imgui-sfml/imgui-SFML.cpp lib/imgui/imgui_widgets.cpp systems/System.h Components.h Systems.h GameManager.cpp GameManager.h components/Controls.h components/Player.h components/Block.h components/FigurePattern.cpp components/FigureState.h components/FigurePattern.h components/FigureState.cpp)
 add_executable(Tetris_test tests/test_components.cpp lib/imgui/imgui.cpp lib/imgui/imgui_draw.cpp lib/imgui-sfml/imgui-SFML.cpp lib/imgui/imgui_widgets.cpp tests/test_components.cpp systems/System.h tests/test_systems.cpp Systems.h GameManager.cpp GameManager.h tests/test_GameManager.cpp components/Block.h components/FigurePattern.cpp components/FigureState.h components/FigureState.cpp)
 
-target_link_libraries(Tetris sfml-graphics sfml-window sfml-system GL)
-target_link_libraries(Tetris_test gtest gtest_main sfml-graphics sfml-window sfml-system GL)
+target_link_libraries(Tetris sfml-graphics sfml-window sfml-system GL stdc++fs)
+target_link_libraries(Tetris_test gtest gtest_main sfml-graphics sfml-window sfml-system GL stdc++fs)
