@@ -6,6 +6,7 @@
 #include "entt/entt.hpp"
 
 #include "../components/Controls.h"
+#include "../components/Figure.h"
 
 class System {
 public:
@@ -23,11 +24,11 @@ public:
     TestSystem(entt::registry *registry) : System(registry) {}
 
     void step_forward(int elapsed) override {
-        registry.view<Controls>().each([](auto entity, auto &controls) {
-            std::cout << controls.w
-                      << controls.a
-                      << controls.s
-                      << controls.d
+        registry.view<Figure>().each([](auto entity, auto &figure) {
+            std::cout << (int)figure.center.row << ' '
+                      << (int)figure.center.column << ' '
+                      << figure.shift.x << ' '
+                      << figure.shift.y << ' '
                       << std::endl;
         });
     }

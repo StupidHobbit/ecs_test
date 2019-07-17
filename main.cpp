@@ -6,6 +6,8 @@
 
 int main() {
     GameManager gm;
+    gm.add_system<FiguresSpawnerSystem>();
+    gm.add_system<ControlSystem>();
     gm.add_system<TestSystem>();
     auto step_size = gm.get_step_size();
 

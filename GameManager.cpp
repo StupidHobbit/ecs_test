@@ -3,6 +3,7 @@
 
 #include "GameManager.h"
 #include "components/Player.h"
+#include "components/Figure.h"
 
 
 void update_controls(entt::registry &registry) {
@@ -39,7 +40,7 @@ uint32_t GameManager::get_step_size() {
 }
 
 GameManager::GameManager() : step(0), step_size(16) {
-    registry.create<Player, Controls>();
+    registry.create<Controls, Figure, Player>();
 }
 
 void GameManager::step_back() {
