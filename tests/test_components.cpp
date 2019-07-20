@@ -5,11 +5,6 @@
 
 using testing::Eq;
 
-bool operator==(const Block a, const Block b) {
-    return a.row == b.row and
-           a.column == b.column;
-}
-
 
 TEST(FigurePattern, load_from_file_O) {
     FigurePattern figure_pattern;

@@ -9,15 +9,15 @@
 using testing::Eq;
 
 
-TEST(System, has_step_forward){
+TEST(System, has_step_forward) {
     &System::step_forward;
 }
 
-TEST(System, has_step_back){
+TEST(System, has_step_back) {
     &System::step_back;
 }
 
-class GameManagerNoControlsUpdate : public GameManager{
+class GameManagerNoControlsUpdate : public GameManager {
 public:
     void step_forward() override {
         for (auto system: systems)
@@ -25,32 +25,42 @@ public:
     }
 };
 
-class SystemsTest : public testing::Test{
+class SystemsTest : public testing::Test {
 public:
 protected:
     entt::registry registry;
     GameManagerNoControlsUpdate gm;
-    void make_n_steps(int n){
+
+    void make_n_steps(int n) {
         for (int i = 0; i < n; i++)
             gm.step_forward();
     }
 };
 
-TEST_F(SystemsTest, FiguresSpawnerSystem_step_forward){
+TEST_F(SystemsTest, FiguresSpawnerSystem_step_forward) {
     FiguresSpawnerSystem system(&registry);
-    auto [entity, figure] = registry.create<Figure>();
+    auto[entity, figure] = registry.create<Figure>();
     ASSERT_EQ(figure.is_valid, false);
     system.step_forward(16);
     ASSERT_EQ(figure.is_valid, true);
 }
 
-class ControlSystemTest : public SystemsTest{
+class ControlSystemTest : public SystemsTest {
 public:
-    void set_controls(Controls new_controls){
+    void set_controls(Controls new_controls) {
         gm.registry.view<Controls>().each([new_controls](auto entity, auto &controls) {
             controls = new_controls;
         });
     }
+
+    void check_pos_after_moving(Controls direction, vec2i expected_shift, Block expected_center) {
+        set_controls(direction);
+        make_n_steps(steps_to_move);
+        auto &figure = gm.registry.get<Figure>(gm.registry.view<Figure>()[0]);
+        ASSERT_EQ(figure.shift, expected_shift);
+        ASSERT_EQ(figure.center, expected_center);
+    }
+
 protected:
     int step_size, steps_to_move, side_shift;
 
@@ -64,20 +74,32 @@ protected:
 
 };
 
-TEST_F(ControlSystemTest, step_forward_move_down){
-    auto expected_shift = vec2i(0, side_shift);
-    make_n_steps(steps_to_move);
-    auto &figure = gm.registry.get<Figure>(gm.registry.view<Figure>()[0]);
-    ASSERT_EQ(figure.shift, expected_shift);
-    ASSERT_EQ(figure.center.row, 1);
+TEST_F(ControlSystemTest, step_forward_move_down) {
+    check_pos_after_moving(
+            Controls{0, 0, 0, 0},
+            vec2i{0, side_shift},
+            Block{1, 0}
+    );
 }
 
-TEST_F(ControlSystemTest, step_forward_move_right){
-    auto expected_shift = vec2i(side_shift, side_shift);
-    set_controls(Controls(0, 0, 0, 1));
-    make_n_steps(steps_to_move);
-    auto &figure = gm.registry.get<Figure>(gm.registry.view<Figure>()[0]);
-    ASSERT_EQ(figure.shift, expected_shift);
-    ASSERT_EQ(figure.center.column, 1);
+TEST_F(ControlSystemTest, step_forward_move_right) {
+    check_pos_after_moving(
+            Controls{0, 0, 0, 1},
+            vec2i{side_shift, side_shift},
+            Block{1, 1}
+    );
 }
 
+
+TEST_F(ControlSystemTest, step_forward_move_right_then_left) {
+    check_pos_after_moving(
+            Controls{0, 0, 0, 1},
+            vec2i{side_shift, side_shift},
+            Block{1, 1}
+    );
+    check_pos_after_moving(
+            Controls{0, 1, 0, 0},
+            vec2i{0, side_shift * 2},
+            Block{2, 0}
+    );
+}
