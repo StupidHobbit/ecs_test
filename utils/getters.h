@@ -1,10 +1,9 @@
 #ifndef TETRIS_GETTERS_H
 #define TETRIS_GETTERS_H
 
-#include "../components/Figure.h"
+#include <utility>
+#include <cstdio>
 
-const vec2i get_field_size(){
-    return vec2i(80, 20);
-}
+std::pair<size_t, size_t> get_field_size();
 
 #endif //TETRIS_GETTERS_H

@@ -5,6 +5,7 @@
 #include "../Components.h"
 #include "../GameManager.h"
 #include "../Constants.h"
+#include "../utils/getters.h"
 
 using testing::Eq;
 
@@ -30,11 +31,19 @@ public:
 protected:
     entt::registry registry;
     GameManagerNoControlsUpdate gm;
+    entt::entity entity1, entity2;
+
+protected:
+    virtual void SetUp() {
+        entity1 = registry.create();
+        entity2 = registry.create();
+    }
 
     void make_n_steps(int n) {
         for (int i = 0; i < n; i++)
             gm.step_forward();
     }
+
 };
 
 TEST_F(SystemsTest, FiguresSpawnerSystem_step_forward) {
@@ -82,6 +91,15 @@ TEST_F(ControlSystemTest, step_forward_move_down) {
     );
 }
 
+TEST_F(ControlSystemTest, step_forward_move_down_with_obstacle) {
+    gm.registry.assign<Block>(entity1, 2u, 0u);
+    check_pos_after_moving(
+            Controls{0, 0, 0, 0},
+            vec2i{0, side_shift},
+            Block{0, 0}
+    );
+}
+
 TEST_F(ControlSystemTest, step_forward_move_right) {
     check_pos_after_moving(
             Controls{0, 0, 0, 1},
@@ -102,4 +120,23 @@ TEST_F(ControlSystemTest, step_forward_move_right_then_left) {
             vec2i{0, side_shift * 2},
             Block{2, 0}
     );
+}
+
+TEST_F(SystemsTest, get_table_from) {
+    registry.assign<Block>(entity1, 0, 0);
+    registry.assign<Block>(entity2, 1, 1);
+    auto table = get_table_from(registry);
+    ASSERT_TRUE(table[0][0]);
+    ASSERT_TRUE(table[1][1]);
+    ASSERT_FALSE(table[0][1]);
+    ASSERT_FALSE(table[1][0]);
+}
+
+TEST_F(SystemsTest, get_table_from_with_figure) {
+    registry.assign<Figure>(entity1, Block{0u, 0u}, get_figure_pattern("O"));
+    auto table = get_table_from(registry);
+    ASSERT_TRUE(table[0][0]);
+    ASSERT_TRUE(table[1][1]);
+    ASSERT_TRUE(table[0][1]);
+    ASSERT_TRUE(table[1][0]);
 }
