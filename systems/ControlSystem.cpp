@@ -38,14 +38,12 @@ void ControlSystem::step_forward(int elapsed) {
 
 bool set_figure_center_if_cell_is_free(Figure &figure, Block new_center, Table table) {
     static auto field_size = get_field_size();
-    if (new_center.column >= field_size.first or
-        new_center.row >= field_size.second)
-        return false;
-
     auto old_center = figure.center;
     figure.center = new_center;
     for (auto block: figure.get_blocks())
-        if (table[block.row][block.column]) {
+        if (block.column >= field_size.second or
+            block.row >= field_size.first or
+            table[block.row][block.column]) {
             figure.center = old_center;
             return false;
         }

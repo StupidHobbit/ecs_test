@@ -11,12 +11,13 @@ void spawn(entt::registry &registry, Figure &figure) {
         auto [entity, block] = registry.create<Block>();
         figure.block_entities[i] = entity;
         block = blocks[i];
+        block;
     }
 }
 
 std::vector<Block> Figure::get_blocks() {
     std::vector<Block> blocks;
-    for (auto &block: figure_pattern->states[current_state].blocks)
+        for (auto &block: figure_pattern->states[current_state].blocks)
         blocks.push_back(block + center);
     return std::move(blocks);
 }

@@ -6,6 +6,7 @@
 #include "../GameManager.h"
 #include "../Constants.h"
 #include "../utils/getters.h"
+#include "utils.h"
 
 using testing::Eq;
 
@@ -46,12 +47,14 @@ protected:
 
 };
 
-TEST_F(SystemsTest, FiguresSpawnerSystem_step_forward) {
+TEST_F(SystemsTest, FiguresSpawnerSystem_step_forward_not_valid) {
     FiguresSpawnerSystem system(&registry);
     auto[entity, figure] = registry.create<Figure>();
-    ASSERT_EQ(figure.is_valid, false);
+    figure = Figure({1u, 1u}, get_figure_pattern("O"));
+    figure.is_valid = false;
     system.step_forward(16);
-    ASSERT_EQ(figure.is_valid, true);
+    ASSERT_TRUE(figure.is_valid);
+    ASSERT_EQ(figure.center, Block(0, 0));
 }
 
 class ControlSystemTest : public SystemsTest {
@@ -89,6 +92,16 @@ TEST_F(ControlSystemTest, step_forward_move_down) {
             vec2i{0, side_shift},
             Block{1, 0}
     );
+}
+
+TEST_F(ControlSystemTest, step_forward_move_down_to_bottom) {
+    make_n_steps(1);
+    auto table = get_table_from(gm.registry);
+    ASSERT_EQ(count_blocks(table), FIGURE_NUMBER_OF_BLOCKS);
+
+    make_n_steps(steps_to_move * get_field_size().first - 1);
+    table = get_table_from(gm.registry);
+    ASSERT_EQ(count_blocks(table), 2 * FIGURE_NUMBER_OF_BLOCKS);
 }
 
 TEST_F(ControlSystemTest, step_forward_move_down_with_obstacle) {

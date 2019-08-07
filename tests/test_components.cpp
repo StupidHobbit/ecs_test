@@ -3,6 +3,7 @@
 
 #include "../Components.h"
 #include "../Systems.h"
+#include "utils.h"
 
 using testing::Eq;
 
@@ -60,14 +61,6 @@ protected:
         figure = Figure({0u, 0u}, get_figure_pattern("O"));
         entity1 = registry.create();
         entity2 = registry.create();
-    }
-
-    int count_blocks(auto &table){
-        int result = 0;
-        for (auto &row: table)
-            for (auto &cell: row)
-                result += cell;
-        return result;
     }
 
     Figure figure;

@@ -40,7 +40,8 @@ uint32_t GameManager::get_step_size() {
 }
 
 GameManager::GameManager() : step(0), step_size(16) {
-    registry.create<Controls, Figure, Player>();
+    auto [entity, controls, figure, player] = registry.create<Controls, Figure, Player>();
+    figure = Figure(Block{0, 0}, get_figure_pattern("O"));
 }
 
 void GameManager::step_back() {
