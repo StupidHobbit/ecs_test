@@ -3,7 +3,7 @@
 
 #include "../Systems.h"
 #include "../Components.h"
-#include "../GameManager.h"
+#include "../SystemManager.h"
 #include "../Constants.h"
 #include "../utils/getters.h"
 #include "utils.h"
@@ -19,7 +19,7 @@ TEST(System, has_step_back) {
     &System::step_back;
 }
 
-class GameManagerNoControlsUpdate : public GameManager {
+class GameManagerNoControlsUpdate : public SystemManager {
 public:
     void step_forward() override {
         for (auto system: systems)

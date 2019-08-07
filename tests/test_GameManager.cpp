@@ -1,11 +1,11 @@
 #include "gtest/gtest.h"
 
-#include "../GameManager.h"
+#include "../SystemManager.h"
 #include "../Systems.h"
 
 using testing::Eq;
 
-class GameManagerTest : public testing::Test, protected GameManager{
+class GameManagerTest : public testing::Test, protected SystemManager{
 protected:
 };
 

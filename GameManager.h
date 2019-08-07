@@ -1,37 +1,20 @@
 #ifndef TETRIS_GAMEMANAGER_H
 #define TETRIS_GAMEMANAGER_H
 
-#include <vector>
 
-#include "entt/entt.hpp"
-
-#include "Systems.h"
-
+#include <SFML/System/Clock.hpp>
+#include <SFML/Graphics.hpp>
+#include "SystemManager.h"
+#include "Renderer.h"
 
 class GameManager {
-private:
-    uint32_t step_size;
-protected:
-    std::vector<System*> systems;
+    SystemManager sm;
+    sf::RenderWindow window;
+    Renderer renderer;
 public:
-    entt::registry registry;
-    int step;
     GameManager();
-    ~GameManager();
-    template<class SystemT>
-    void add_system() {
-        auto system = new SystemT(&registry);
-        systems.push_back(dynamic_cast<System*>(system));
-    }
-
-    virtual void step_forward();
-    void step_back();
-    int get_step();
-    uint32_t get_step_size();
-
+    void run();
 };
 
-
-void update_controls(entt::registry&);
 
 #endif //TETRIS_GAMEMANAGER_H

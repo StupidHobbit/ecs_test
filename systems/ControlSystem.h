@@ -7,7 +7,7 @@
 class ControlSystem : public System {
 public:
     static const int CELL_SIZE = 10000;
-    static const int SPEED = 10;
+    static const int SPEED = 30;
 
     void step_forward(int elapsed) override;
 
