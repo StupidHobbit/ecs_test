@@ -7,7 +7,6 @@ GameManager::GameManager() :
 void GameManager::run() {
     sm.add_system<FiguresSpawnerSystem>();
     sm.add_system<ControlSystem>();
-    sm.add_system<TestSystem>();
     auto step_size = sm.get_step_size();
 
     sf::Clock clock;
@@ -19,6 +18,7 @@ void GameManager::run() {
         }
         auto current_step = clock.getElapsedTime().asMilliseconds() /
                             step_size;
+        std::cout << current_step << std::endl;
         if (current_step >= sm.get_step())
             sm.step_forward();
 
