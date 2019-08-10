@@ -1,8 +1,9 @@
 #include "GameManager.h"
+#include "rendering/BlockRenderer.h"
+#include "rendering/BoardsRenderer.h"
 
 GameManager::GameManager() :
-        window(sf::VideoMode(1365, 768), "Tetris"),
-        renderer(window, sm.registry){}
+        window(sf::VideoMode(1365, 768), "Tetris"){}
 
 void GameManager::run() {
     sm.add_system<FiguresSpawnerSystem>();
@@ -10,6 +11,13 @@ void GameManager::run() {
     auto step_size = sm.get_step_size();
 
     sf::Clock clock;
+    BlockRenderer block_renderer(sm.registry);
+    BoardsRenderer boards_renderer;
+
+    auto view = window.getDefaultView();
+    view.setCenter((sf::Vector2f(0, 0) + boards_renderer.get_size()) / 2.f);
+    window.setView(view);
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -22,6 +30,11 @@ void GameManager::run() {
         if (current_step >= sm.get_step())
             sm.step_forward();
 
-        renderer.render();
+        window.clear(sf::Color::White);
+
+        window.draw(block_renderer);
+        window.draw(boards_renderer);
+
+        window.display();
     }
 }

@@ -1,0 +1,8 @@
+#ifndef TETRIS_CONSTANTS_H
+#define TETRIS_CONSTANTS_H
+
+const float CELL_SIZE = 10;
+const float OUTLINE_SIZE = 2;
+const float CELL_FULL_SIZE = CELL_SIZE + OUTLINE_SIZE;
+
+#endif //TETRIS_CONSTANTS_H
