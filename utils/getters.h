@@ -3,7 +3,14 @@
 
 #include <utility>
 #include <cstdio>
+#include "../components/Block.h"
+#include "../components/FigurePattern.h"
 
-std::pair<size_t, size_t> get_field_size();
+constexpr std::pair<size_t, size_t> get_field_size();
+
+Block next_block_position();
+
+FigurePattern &next_block_pattern();
+
 
 #endif //TETRIS_GETTERS_H

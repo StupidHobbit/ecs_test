@@ -4,7 +4,7 @@
 
 #include <string>
 #include <vector>
-#include <bits/unordered_map.h>
+#include <unordered_map>
 #include "FigureState.h"
 
 struct FigurePattern{
@@ -14,5 +14,7 @@ struct FigurePattern{
 };
 
 FigurePattern &get_figure_pattern(std::string const &name);
+
+FigurePattern &get_random_figure_pattern();
 
 #endif //TETRIS_FIGUREPATTERN_H

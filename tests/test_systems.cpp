@@ -52,9 +52,10 @@ TEST_F(SystemsTest, FiguresSpawnerSystem_step_forward_not_valid) {
     auto[entity, figure] = registry.create<Figure>();
     figure = Figure({1u, 1u}, get_figure_pattern("O"));
     figure.is_valid = false;
+    auto expected_center = next_block_position();
     system.step_forward(16);
     ASSERT_TRUE(figure.is_valid);
-    ASSERT_EQ(figure.center, Block(0, 0));
+    ASSERT_EQ(figure.center, expected_center);
 }
 
 class ControlSystemTest : public SystemsTest {
@@ -65,12 +66,13 @@ public:
         });
     }
 
-    void check_pos_after_moving(Controls direction, vec2i expected_shift, Block expected_center) {
+    void check_pos_after_moving(Controls direction, vec2i expected_shift, Block expected_center_shift) {
         set_controls(direction);
+        expected_center_shift = expected_center_shift + next_block_position();
         make_n_steps(steps_to_move);
         auto &figure = gm.registry.get<Figure>(gm.registry.view<Figure>()[0]);
         ASSERT_EQ(figure.shift, expected_shift);
-        ASSERT_EQ(figure.center, expected_center);
+        ASSERT_EQ(figure.center, expected_center_shift);
     }
 
 protected:
@@ -105,7 +107,8 @@ TEST_F(ControlSystemTest, step_forward_move_down_to_bottom) {
 }
 
 TEST_F(ControlSystemTest, step_forward_move_down_with_obstacle) {
-    gm.registry.assign<Block>(entity1, 2u, 0u);
+    auto &obstacle = gm.registry.assign<Block>(entity1, 2u, 0u);
+    obstacle = obstacle + next_block_position();
     check_pos_after_moving(
             Controls{0, 0, 0, 0},
             vec2i{0, side_shift},

@@ -4,6 +4,7 @@
 #include "SystemManager.h"
 #include "components/Player.h"
 #include "components/Figure.h"
+#include "utils/getters.h"
 
 
 void update_controls(entt::registry &registry) {
@@ -40,8 +41,11 @@ uint32_t SystemManager::get_step_size() {
 }
 
 SystemManager::SystemManager() : step(0), step_size(16) {
-    auto [entity, controls, figure, player] = registry.create<Controls, Figure, Player>();
-    figure = Figure(Block{0, 0}, get_figure_pattern("O"));
+    auto[entity, controls, figure, player] = registry.create<Controls, Figure, Player>();
+    figure = Figure(
+            next_block_position(),
+            next_block_pattern()
+    );
 }
 
 void SystemManager::step_back() {
