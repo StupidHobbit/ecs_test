@@ -18,6 +18,9 @@ void FigurePattern::load_from_file(std::string const &path) {
     }
 }
 
+size_t FigurePattern::size() const{
+    return states.size();
+}
 
 FigurePattern &get_figure_pattern(std::string const &name) {
     static std::unordered_map<std::string, FigurePattern> cache;

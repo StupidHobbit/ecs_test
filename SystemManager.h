@@ -8,7 +8,7 @@
 #include "Systems.h"
 
 
-class SystemManager {
+class  SystemManager {
 private:
     uint32_t step_size;
 protected:

@@ -5,6 +5,7 @@
 #include "components/Player.h"
 #include "components/Figure.h"
 #include "utils/getters.h"
+#include "components/Rotatable.h"
 
 
 void update_controls(entt::registry &registry) {
@@ -41,7 +42,7 @@ uint32_t SystemManager::get_step_size() {
 }
 
 SystemManager::SystemManager() : step(0), step_size(16) {
-    auto[entity, controls, figure, player] = registry.create<Controls, Figure, Player>();
+    auto[entity, c, figure, p, r] = registry.create<Controls, Figure, Player, Rotatable>();
     figure = Figure(
             next_block_position(),
             next_block_pattern()

@@ -2,6 +2,7 @@
 #include "../Constants.h"
 #include "../Components.h"
 #include "../utils/getters.h"
+#include "utils.h"
 
 inline int sign(int x) {
     return x > 0 ? 1 : -1;
@@ -40,17 +41,14 @@ bool set_figure_center_if_cell_is_free(Figure &figure, Block new_center, Table t
     static auto field_size = get_field_size();
     auto old_center = figure.center;
     figure.center = new_center;
-    for (auto block: figure.get_blocks())
-        if (block.column >= field_size.second or
-            block.row >= field_size.first or
-            table[block.row][block.column]) {
-            figure.center = old_center;
-            return false;
-        }
+    if (figure_collides(figure, table)) {
+        figure.center = old_center;
+        return false;
+    }
     return true;
 }
 
-std::vector<std::vector<char>> get_table_from(entt::registry &registry) {
+Table get_table_from(entt::registry &registry) {
     static auto size = get_field_size();
     Table table(size.first, std::vector<char>(size.second, 0));
     registry.view<Block>().each([&table](auto entity, auto &block) {

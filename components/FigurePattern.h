@@ -11,6 +11,7 @@ struct FigurePattern{
     std::string name;
     std::vector<FigureState> states;
     void load_from_file(std::string const &path);
+    size_t size() const;
 };
 
 FigurePattern &get_figure_pattern(std::string const &name);

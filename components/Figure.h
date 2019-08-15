@@ -14,7 +14,6 @@ struct Figure {
     bool is_valid;
     size_t current_state;
     vec2i shift;
-    entt::entity block_entities[FIGURE_NUMBER_OF_BLOCKS];
 
     Figure() : is_valid(false) {}
 
@@ -26,9 +25,10 @@ struct Figure {
             {}
 
     std::vector<Block> get_blocks();
+    void rotate_right();
+    void rotate_left();
 };
 
-void remove(entt::registry &registry, Figure &figure);
 void spawn(entt::registry &registry, Figure &figure);
 
 inline void remove(auto &table, Figure &figure) {

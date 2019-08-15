@@ -4,11 +4,12 @@
 
 #include <stdint-gcc.h>
 
+using uint = unsigned int;
 
 struct Block {
-    uint8_t row, column;
+    uint row, column;
 
-    Block(uint8_t row, uint8_t column) : row(row), column(column) {}
+    Block(uint row, uint column) : row(row), column(column) {}
 
     bool operator==(const Block b) const {
         return row == b.row and
@@ -19,6 +20,22 @@ struct Block {
 
     Block operator+(const Block b) const {
         return Block(row + b.row, column + b.column);
+    }
+
+    Block operator-(const Block b) const {
+        return Block(row - b.row, column - b.column);
+    }
+
+    Block &operator+=(const Block b) {
+        row += b.row;
+        column += b.column;
+        return *this;
+    }
+
+    Block &operator-=(const Block b) {
+        row -= b.row;
+        column -= b.column;
+        return *this;
     }
 };
 

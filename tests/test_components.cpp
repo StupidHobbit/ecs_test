@@ -34,10 +34,10 @@ TEST(FigureState, load_from_stream_I1) {
     std::string s;
     std::getline(fin, s);
     figure_state.load_from_stream(fin);
-    ASSERT_EQ(figure_state.blocks[0], Block({1, 0}));
-    ASSERT_EQ(figure_state.blocks[1], Block({1, 1}));
-    ASSERT_EQ(figure_state.blocks[2], Block({1, 2}));
-    ASSERT_EQ(figure_state.blocks[3], Block({1, 3}));
+    ASSERT_EQ(figure_state.blocks[0], Block({0, -1u}));
+    ASSERT_EQ(figure_state.blocks[1], Block({0, 0}));
+    ASSERT_EQ(figure_state.blocks[2], Block({0, 1}));
+    ASSERT_EQ(figure_state.blocks[3], Block({0, 2}));
 }
 
 TEST(FigureState, load_from_stream_I2) {
@@ -48,10 +48,10 @@ TEST(FigureState, load_from_stream_I2) {
     figure_state.load_from_stream(fin);
     std::getline(fin, s);
     figure_state.load_from_stream(fin);
-    ASSERT_EQ(figure_state.blocks[0], Block({0, 1}));
-    ASSERT_EQ(figure_state.blocks[1], Block({1, 1}));
-    ASSERT_EQ(figure_state.blocks[2], Block({2, 1}));
-    ASSERT_EQ(figure_state.blocks[3], Block({3, 1}));
+    ASSERT_EQ(figure_state.blocks[0], Block({-1u, 0}));
+    ASSERT_EQ(figure_state.blocks[1], Block({0, 0}));
+    ASSERT_EQ(figure_state.blocks[2], Block({1, 0}));
+    ASSERT_EQ(figure_state.blocks[3], Block({2, 0}));
 }
 
 class FigureTest : public testing::Test {
@@ -76,11 +76,4 @@ TEST_F(FigureTest, spawn) {
     ASSERT_TRUE(table[0][1]);
     ASSERT_TRUE(table[1][0]);
     ASSERT_TRUE(table[1][1]);
-}
-
-TEST_F(FigureTest, remove) {
-    spawn(registry, figure);
-    remove(registry, figure);
-    auto table = get_table_from(registry);
-    ASSERT_EQ(count_blocks(table), 0);
 }
