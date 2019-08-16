@@ -7,5 +7,6 @@
 #include "components/FigureState.h"
 #include "components/Figure.h"
 #include "components/Player.h"
+#include "components/Rotatable.h"
 
 #endif //TETRIS_COMPONENTS_H

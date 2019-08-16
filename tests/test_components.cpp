@@ -2,8 +2,8 @@
 #include <fstream>
 
 #include "../Components.h"
-#include "../Systems.h"
 #include "utils.h"
+#include "../systems/utils.h"
 
 using testing::Eq;
 

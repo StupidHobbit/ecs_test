@@ -1,5 +1,5 @@
-#ifndef TETRIS_UTILS_H
-#define TETRIS_UTILS_H
+#ifndef TEST_UTILS_H
+#define TEST_UTILS_H
 
 int count_blocks(auto &table){
     int result = 0;
@@ -9,4 +9,4 @@ int count_blocks(auto &table){
     return result;
 }
 
-#endif //TETRIS_UTILS_H
+#endif //TEST_UTILS_H

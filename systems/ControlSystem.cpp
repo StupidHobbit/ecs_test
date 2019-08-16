@@ -48,18 +48,6 @@ bool set_figure_center_if_cell_is_free(Figure &figure, Block new_center, Table t
     return true;
 }
 
-Table get_table_from(entt::registry &registry) {
-    static auto size = get_field_size();
-    Table table(size.first, std::vector<char>(size.second, 0));
-    registry.view<Block>().each([&table](auto entity, auto &block) {
-        table[block.row][block.column] = 1;
-    });
-    registry.view<Figure>().each([&table](auto entity, auto &figure) {
-        spawn(table, figure);
-    });
-    return std::move(table);
-}
-
 void ControlSystem::step_back(int elapsed) {
 
 }

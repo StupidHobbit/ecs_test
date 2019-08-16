@@ -3,6 +3,7 @@
 
 
 #include "System.h"
+#include "utils.h"
 
 class ControlSystem : public System {
 public:
@@ -16,9 +17,7 @@ public:
     ControlSystem(entt::registry *registry);
 };
 
-using Table = std::vector<std::vector<char>>;
 bool set_figure_center_if_cell_is_free(Figure &figure, Block new_center, Table table);
 
-Table get_table_from(entt::registry &registry);
 
 #endif //TETRIS_CONTROLSYSTEM_H
