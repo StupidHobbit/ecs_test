@@ -81,8 +81,8 @@ protected:
 
     virtual void SetUp() {
         step_size = gm.get_step_size();
-        steps_to_move = ControlSystem::CELL_SIZE / (ControlSystem::SPEED * step_size) + 1;
-        side_shift = ControlSystem::SPEED * step_size * steps_to_move - ControlSystem::CELL_SIZE;
+        steps_to_move = ControlSystem::CELL_SIZE / (FIGURE_STARTING_SPEED * step_size) + 1;
+        side_shift = FIGURE_STARTING_SPEED * step_size * steps_to_move - ControlSystem::CELL_SIZE;
         gm.add_system<FiguresSpawnerSystem>();
         gm.add_system<ControlSystem>();
     }
@@ -238,4 +238,23 @@ TEST_F(RowsCleaningSystemTest, step_forward_block_falls) {
     auto &block = gm.registry.assign<Block>(entity1, last_row - 1, 0);
     make_n_steps(1);
     ASSERT_EQ(block.row, last_row);
+}
+
+class BoostSystemTest : public SystemsTest {
+protected:
+    virtual void SetUp() {
+        gm.add_system<BoostSystem>();
+    }
+};
+
+TEST_F(BoostSystemTest, step_forward) {
+    auto [entity, figure, controls] = gm.registry.create<Figure, Controls>();
+
+    set_controls(Controls(0, 0, 1, 0));
+    make_n_steps(1);
+    ASSERT_EQ(figure.speed, FIGURE_MAX_SPEED);
+
+    set_controls(Controls(0, 0, 0, 0));
+    make_n_steps(1);
+    ASSERT_EQ(figure.speed, FIGURE_STARTING_SPEED);
 }

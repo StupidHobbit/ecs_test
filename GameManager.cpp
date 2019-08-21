@@ -10,6 +10,7 @@ void GameManager::run() {
     sm.add_system<ControlSystem>();
     sm.add_system<RotatingSystem>();
     sm.add_system<RowsCleaningSystem>();
+    sm.add_system<BoostSystem>();
     auto step_size = sm.get_step_size();
 
     sf::Clock clock;

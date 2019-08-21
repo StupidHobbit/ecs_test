@@ -13,7 +13,7 @@ void ControlSystem::step_forward(int elapsed) {
     registry.view<Controls, Figure>().each([elapsed, &table](auto entity, auto &controls, auto &figure) {
         remove(table, figure);
 
-        auto speed = vec2i(controls.d - controls.a, 1) * SPEED;
+        auto speed = vec2i(controls.d - controls.a, 1) * figure.speed;
         figure.shift += speed * elapsed;
 
         if (figure.shift.y >= CELL_SIZE)

@@ -6,6 +6,9 @@
 #include "Block.h"
 #include "FigurePattern.h"
 
+const int FIGURE_STARTING_SPEED = 35;
+const int FIGURE_MAX_SPEED = 500;
+
 using vec2i = sf::Vector2i;
 
 struct Figure {
@@ -14,6 +17,7 @@ struct Figure {
     bool is_valid;
     size_t current_state;
     vec2i shift;
+    int speed;
 
     Figure() : is_valid(false) {}
 
@@ -21,7 +25,8 @@ struct Figure {
             center(center),
             figure_pattern(&figurePattern),
             current_state(0),
-            is_valid(true)
+            is_valid(true),
+            speed(FIGURE_STARTING_SPEED)
             {}
 
     std::vector<Block> get_blocks();
