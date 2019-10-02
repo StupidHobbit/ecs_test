@@ -10,15 +10,15 @@ void spawn(entt::registry &registry, Figure &figure) {
 
 std::vector<Block> Figure::get_blocks() {
     std::vector<Block> blocks;
-    for (auto &block: figure_pattern->states[current_state].blocks)
+    for (auto &block: pattern->states[current_state].blocks)
         blocks.push_back(block + center);
     return std::move(blocks);
 }
 
 void Figure::rotate_right() {
-    current_state = (current_state + 1) % figure_pattern->size();
+    current_state = (current_state + 1) % pattern->size();
 }
 
 void Figure::rotate_left() {
-    current_state = (current_state - 1) % figure_pattern->size();
+    current_state = (current_state - 1) % pattern->size();
 }

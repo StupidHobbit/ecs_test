@@ -11,3 +11,7 @@ Block next_block_position() {
 FigurePattern &next_block_pattern() {
     return get_random_figure_pattern();
 }
+
+constexpr size_t get_history_max_size() {
+    return 120;
+}

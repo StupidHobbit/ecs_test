@@ -7,6 +7,7 @@
 #include "../components/FigurePattern.h"
 
 constexpr std::pair<size_t, size_t> get_field_size();
+constexpr size_t get_history_max_size();
 
 Block next_block_position();
 

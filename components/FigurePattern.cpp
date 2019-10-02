@@ -31,6 +31,6 @@ FigurePattern &get_figure_pattern(std::string const &name) {
 }
 
 FigurePattern &get_random_figure_pattern(){
-    const auto names = std::vector{"O", "I"};
+    const auto names = std::vector{"O", "I", "Z", "L"};
     return get_figure_pattern(choice(names));
 }

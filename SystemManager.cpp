@@ -51,4 +51,8 @@ SystemManager::SystemManager() : step(0), step_size(16) {
 
 void SystemManager::step_back() {
     step--;
+    update_controls(registry);
+    for (auto system: systems) {
+        system->step_back(step_size);
+    }
 }

@@ -13,7 +13,7 @@ using vec2i = sf::Vector2i;
 
 struct Figure {
     Block center;
-    FigurePattern const *figure_pattern;
+    FigurePattern const *pattern;
     bool is_valid;
     size_t current_state;
     vec2i shift;
@@ -23,7 +23,7 @@ struct Figure {
 
     Figure(const Block &center, FigurePattern const &figurePattern) :
             center(center),
-            figure_pattern(&figurePattern),
+            pattern(&figurePattern),
             current_state(0),
             is_valid(true),
             speed(FIGURE_STARTING_SPEED)
